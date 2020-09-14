@@ -7,7 +7,14 @@ node
     checkout scm
     sh 'git submodule update --init'  
   }
-       
+
+  nsiColor('xterm') {
+        // Just some echoes to show the ANSI color.
+        stage "\u001B[31mI'm Red\u001B[0m Now not"
+    }
+  
+}
+  
 /*  stage('Stage Build')
   {
     echo "My branch is: ${env.BRANCH_NAME}"
@@ -17,13 +24,13 @@ node
 
     sh "./gradlew clean assemble${flavor}Debug -PBUILD_NUMBER=${env.BUILD_NUMBER}"
   }
-*/  
+  
   stage('Stage Archive')
   {
     archiveArtifacts artifacts: 'app/build/outputs/apk/*.apk', fingerprint: true
   }
 }
- /* 
+  
   stage('Stage Upload To Fabric')
   {
     sh "./gradlew crashlyticsUploadDistribution${flavor}Debug  -PBUILD_NUMBER=${env.BUILD_NUMBER}"
