@@ -8,40 +8,22 @@ node
     sh 'git submodule update --init'  
   }
 
-  ansiColor('xterm') {
-        // Just some echoes to show the ANSI color.
-        stage "\u001B[31mI'm Red\u001B[0m Now not"
-    }
+  stage('Create build output')
+  {
+    // Make the output directory.
+    sh "mkdir -p output"
+
+    // Write an useful file, which is needed to be archived.
+    writeFile file: "output/usefulfile.txt", text: "This file is useful, need to archive it."
+
+    // Write an useless file, which is not needed to be archived.
+    writeFile file: "output/uselessfile.md", text: "This file is useless, no need to archive it."
+
+    stage "Archive build output"
+    
+    // Archive the build output artifacts.
+    archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
+  }
   
 }
   
-/*  stage('Stage Build')
-  {
-    echo "My branch is: ${env.BRANCH_NAME}"
-
-    def flavor = flavor(env.BRANCH_NAME)
-    echo "Building flavor ${flavor}"
-
-    sh "./gradlew clean assemble${flavor}Debug -PBUILD_NUMBER=${env.BUILD_NUMBER}"
-  }
-  
-  stage('Stage Archive')
-  {
-    archiveArtifacts artifacts: 'app/build/outputs/apk/*.apk', fingerprint: true
-  }
-}
-  
-  stage('Stage Upload To Fabric')
-  {
-    sh "./gradlew crashlyticsUploadDistribution${flavor}Debug  -PBUILD_NUMBER=${env.BUILD_NUMBER}"
-  }
-  
- }
-
-@NonCPS
-def flavor(branchName) {
-  def matcher = (env.BRANCH_NAME =~ /QA_([a-z_]+)/)
-  assert matcher.matches()
-  matcher[0][1]
-}
-*/
