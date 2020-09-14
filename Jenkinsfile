@@ -20,12 +20,10 @@ node
     writeFile file: "output/uselessfile.md", text: "This file is useless, no need to archive it."
   }
   
-  stage('Archive build output')
+  stage('Maven build') 
   {
-    
-    // Archive the build output artifacts.
-    archiveArtifacts artifacts: 'output/*.txt', excludes: 'output/*.md'
-  }
+        buildInfo = rtMaven.run pom: 'maven-example/pom.xml', goals: 'clean install'
+    }
   
 }
   
