@@ -8,7 +8,7 @@ node
     sh 'git submodule update --init'  
   }
   
-  stage('Stage Build')
+/*  stage('Stage Build')
   {
     echo "My branch is: ${env.BRANCH_NAME}"
 
@@ -36,3 +36,4 @@ def flavor(branchName) {
   assert matcher.matches()
   matcher[0][1]
 }
+*/
