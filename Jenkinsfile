@@ -4,8 +4,10 @@ node
   stage('Stage mvn')
   {
 
-    
-    sh 'mvn install'  
+    steps
+      {
+        sh 'mvn install'
+      }
       
   }
 }
